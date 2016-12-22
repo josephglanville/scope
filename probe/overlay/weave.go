@@ -73,14 +73,20 @@ var (
 	}
 
 	weaveTableTemplates = report.TableTemplates{
-		WeaveIPAMTableID: {ID: WeaveIPAMTableID, Label: "IPAM",
+		WeaveIPAMTableID: {
+			ID:    WeaveIPAMTableID,
+			Label: "IPAM",
+			Type:  "property-list",
 			FixedRows: map[string]string{
 				WeaveIPAMStatus:        "Status",
 				WeaveIPAMRange:         "Range",
 				WeaveIPAMDefaultSubnet: "Default Subnet",
 			},
 		},
-		WeaveDNSTableID: {ID: WeaveDNSTableID, Label: "DNS",
+		WeaveDNSTableID: {
+			ID:    WeaveDNSTableID,
+			Label: "DNS",
+			Type:  "property-list",
 			FixedRows: map[string]string{
 				WeaveDNSDomain:     "Domain",
 				WeaveDNSUpstream:   "Upstream",
@@ -88,13 +94,19 @@ var (
 				WeaveDNSEntryCount: "Entries",
 			},
 		},
-		WeaveProxyTableID: {ID: WeaveProxyTableID, Label: "Proxy",
+		WeaveProxyTableID: {
+			ID:    WeaveProxyTableID,
+			Label: "Proxy",
+			Type:  "property-list",
 			FixedRows: map[string]string{
 				WeaveProxyStatus:  "Status",
 				WeaveProxyAddress: "Address",
 			},
 		},
-		WeavePluginTableID: {ID: WeavePluginTableID, Label: "Plugin",
+		WeavePluginTableID: {
+			ID:    WeavePluginTableID,
+			Label: "Plugin",
+			Type:  "property-list",
 			FixedRows: map[string]string{
 				WeavePluginStatus: "Status",
 				WeavePluginDriver: "Driver Name",
@@ -103,6 +115,7 @@ var (
 		WeaveConnectionsTablePrefix: {
 			ID:     WeaveConnectionsTablePrefix,
 			Label:  "Connections",
+			Type:   "multicolumn-table",
 			Prefix: WeaveConnectionsTablePrefix,
 		},
 	}

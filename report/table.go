@@ -55,10 +55,19 @@ func (node Node) ExtractTable(template TableTemplate) (rows map[string]string, t
 	return rows, truncationCount
 }
 
+type Column struct {
+	ID        string `json:"id"`
+	Label     string `json:"label"`
+	DataType  string `json:"dataType"`
+	Alignment string `json:"alignment"`
+}
+
 // Table is the type for a table in the UI.
 type Table struct {
 	ID              string        `json:"id"`
 	Label           string        `json:"label"`
+	Type            string        `json:"type"`
+	Columns         []Column      `json:"columns"`
 	Rows            []MetadataRow `json:"rows"`
 	TruncationCount int           `json:"truncationCount,omitempty"`
 }
@@ -82,18 +91,13 @@ func (t Table) Copy() Table {
 	return result
 }
 
-// FixedRow describes a row which is part of a TableTemplate and whose value is extracted
-// from a predetermined key
-type FixedRow struct {
-	Label string `json:"label"`
-	Key   string `json:"key"`
-}
-
 // TableTemplate describes how to render a table for the UI.
 type TableTemplate struct {
-	ID     string `json:"id"`
-	Label  string `json:"label"`
-	Prefix string `json:"prefix"`
+	ID      string   `json:"id"`
+	Label   string   `json:"label"`
+	Prefix  string   `json:"prefix"`
+	Type    string   `json:"type"`
+	Columns []Column `json:"columns"`
 	// FixedRows indicates what predetermined rows to render each entry is
 	// indexed by the key to extract the row value is mapped to the row
 	// label
