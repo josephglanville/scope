@@ -17,8 +17,8 @@ const (
 	TruncationCountPrefix = "table_truncation_count_"
 )
 
-// AddPrefixTable appends arbitrary key-value pairs to the Node, returning a new node.
-func (node Node) AddPrefixTable(prefix string, labels map[string]string) Node {
+// AddPrefixLabels appends arbitrary key-value pairs to the Node, returning a new node.
+func (node Node) AddPrefixLabels(prefix string, labels map[string]string) Node {
 	count := 0
 	for key, value := range labels {
 		if count >= MaxTableRows {
@@ -34,23 +34,39 @@ func (node Node) AddPrefixTable(prefix string, labels map[string]string) Node {
 	return node
 }
 
-// ExtractTable returns the key-value pairs to build a table from this node
-func (node Node) ExtractTable(template TableTemplate) (rows map[string]string, truncationCount int) {
-	rows = map[string]string{}
+// ExtractTable returns the rows to build a table from this node
+func (node Node) ExtractTable(template TableTemplate) (rows []Row, truncationCount int) {
+	rows = []Row{}
 	truncationCount = 0
+	// Assume it's a property list
+	keyValues := map[string]string{}
 	node.Latest.ForEach(func(key string, _ time.Time, value string) {
 		if label, ok := template.FixedRows[key]; ok {
-			rows[label] = value
+			keyValues[label] = value
 		}
 		if len(template.Prefix) > 0 && strings.HasPrefix(key, template.Prefix) {
 			label := key[len(template.Prefix):]
-			rows[label] = value
+			keyValues[label] = value
 		}
 	})
 	if str, ok := node.Latest.Lookup(TruncationCountPrefix + template.Prefix); ok {
 		if n, err := fmt.Sscanf(str, "%d", &truncationCount); n != 1 || err != nil {
 			log.Warn("Unexpected truncation count format %q", str)
 		}
+	}
+	labels := make([]string, 0, len(rows))
+	for label := range keyValues {
+		labels = append(labels, label)
+	}
+	sort.Strings(labels)
+	for _, label := range labels {
+		rows = append(rows, Row{
+			Entries: map[string]string{
+				"id":    "label_" + label,
+				"label": label,
+				"value": keyValues[label],
+			},
+		})
 	}
 	return rows, truncationCount
 }
@@ -62,14 +78,18 @@ type Column struct {
 	Alignment string `json:"alignment"`
 }
 
+type Row struct {
+	Entries map[string]string `json:"entries"`
+}
+
 // Table is the type for a table in the UI.
 type Table struct {
-	ID              string        `json:"id"`
-	Label           string        `json:"label"`
-	Type            string        `json:"type"`
-	Columns         []Column      `json:"columns"`
-	Rows            []MetadataRow `json:"rows"`
-	TruncationCount int           `json:"truncationCount,omitempty"`
+	ID              string   `json:"id"`
+	Label           string   `json:"label"`
+	Type            string   `json:"type"`
+	Columns         []Column `json:"columns"`
+	Rows            []Row    `json:"rows"`
+	TruncationCount int      `json:"truncationCount,omitempty"`
 }
 
 type tablesByID []Table
@@ -81,9 +101,14 @@ func (t tablesByID) Less(i, j int) bool { return t[i].ID < t[j].ID }
 // Copy returns a copy of the Table.
 func (t Table) Copy() Table {
 	result := Table{
-		ID:    t.ID,
-		Label: t.Label,
-		Rows:  make([]MetadataRow, 0, len(t.Rows)),
+		ID:      t.ID,
+		Label:   t.Label,
+		Type:    t.Type,
+		Columns: make([]Column, 0, len(t.Columns)),
+		Rows:    make([]Row, 0, len(t.Rows)),
+	}
+	for _, column := range t.Columns {
+		result.Columns = append(result.Columns, column)
 	}
 	for _, row := range t.Rows {
 		result.Rows = append(result.Rows, row)
@@ -146,25 +171,12 @@ func (t TableTemplates) Tables(node Node) []Table {
 	var result []Table
 	for _, template := range t {
 		rows, truncationCount := node.ExtractTable(template)
-		table := Table{
+		result = append(result, Table{
 			ID:              template.ID,
 			Label:           template.Label,
-			Rows:            []MetadataRow{},
+			Rows:            rows,
 			TruncationCount: truncationCount,
-		}
-		keys := make([]string, 0, len(rows))
-		for k := range rows {
-			keys = append(keys, k)
-		}
-		sort.Strings(keys)
-		for _, key := range keys {
-			table.Rows = append(table.Rows, MetadataRow{
-				ID:    "label_" + key,
-				Label: key,
-				Value: rows[key],
-			})
-		}
-		result = append(result, table)
+		})
 	}
 	sort.Sort(tablesByID(result))
 	return result
