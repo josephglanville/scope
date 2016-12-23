@@ -15,7 +15,30 @@ import (
 const (
 	MaxTableRows          = 20
 	TruncationCountPrefix = "table_truncation_count_"
+	MulticolumnTableType  = "multicolumn-table"
+	PropertyListType      = "property-list"
 )
+
+// AddPrefixTable appends arbitrary rows to the Node, returning a new node.
+func (node Node) AddPrefixTable(prefix string, rows []Row) Node {
+	count := 0
+	for _, row := range rows {
+		if count >= MaxTableRows {
+			break
+		}
+		// TODO: Figure a more natural way of storing rows
+		for column, value := range row.Entries {
+			key := fmt.Sprintf("%s %s", row.ID, column)
+			node = node.WithLatest(prefix+key, mtime.Now(), value)
+		}
+		count++
+	}
+	if len(rows) > MaxTableRows {
+		truncationCount := fmt.Sprintf("%d", len(rows)-MaxTableRows)
+		node = node.WithLatest(TruncationCountPrefix+prefix, mtime.Now(), truncationCount)
+	}
+	return node
+}
 
 // AddPrefixLabels appends arbitrary key-value pairs to the Node, returning a new node.
 func (node Node) AddPrefixLabels(prefix string, labels map[string]string) Node {
@@ -37,37 +60,60 @@ func (node Node) AddPrefixLabels(prefix string, labels map[string]string) Node {
 // ExtractTable returns the rows to build a table from this node
 func (node Node) ExtractTable(template TableTemplate) (rows []Row, truncationCount int) {
 	rows = []Row{}
+	switch template.Type {
+	case MulticolumnTableType:
+		keyRows := map[string]Row{}
+		node.Latest.ForEach(func(key string, _ time.Time, value string) {
+			if len(template.Prefix) > 0 && strings.HasPrefix(key, template.Prefix) {
+				rowID, column := "", ""
+				fmt.Sscanf(key[len(template.Prefix):], "%s %s", &rowID, &column)
+				if _, ok := keyRows[rowID]; !ok {
+					keyRows[rowID] = Row{
+						ID:      rowID,
+						Entries: map[string]string{},
+					}
+				}
+				keyRows[rowID].Entries[column] = value
+			}
+		})
+		for _, row := range keyRows {
+			rows = append(rows, row)
+		}
+	// By default assume it's a property list (for backward compatibility)
+	default:
+		keyValues := map[string]string{}
+		node.Latest.ForEach(func(key string, _ time.Time, value string) {
+			if label, ok := template.FixedRows[key]; ok {
+				keyValues[label] = value
+			}
+			if len(template.Prefix) > 0 && strings.HasPrefix(key, template.Prefix) {
+				label := key[len(template.Prefix):]
+				keyValues[label] = value
+			}
+		})
+		labels := make([]string, 0, len(rows))
+		for label := range keyValues {
+			labels = append(labels, label)
+		}
+		sort.Strings(labels)
+		for _, label := range labels {
+			rows = append(rows, Row{
+				ID: "label_" + label,
+				Entries: map[string]string{
+					"label": label,
+					"value": keyValues[label],
+				},
+			})
+		}
+	}
+
 	truncationCount = 0
-	// Assume it's a property list
-	keyValues := map[string]string{}
-	node.Latest.ForEach(func(key string, _ time.Time, value string) {
-		if label, ok := template.FixedRows[key]; ok {
-			keyValues[label] = value
-		}
-		if len(template.Prefix) > 0 && strings.HasPrefix(key, template.Prefix) {
-			label := key[len(template.Prefix):]
-			keyValues[label] = value
-		}
-	})
 	if str, ok := node.Latest.Lookup(TruncationCountPrefix + template.Prefix); ok {
 		if n, err := fmt.Sscanf(str, "%d", &truncationCount); n != 1 || err != nil {
 			log.Warn("Unexpected truncation count format %q", str)
 		}
 	}
-	labels := make([]string, 0, len(rows))
-	for label := range keyValues {
-		labels = append(labels, label)
-	}
-	sort.Strings(labels)
-	for _, label := range labels {
-		rows = append(rows, Row{
-			Entries: map[string]string{
-				"id":    "label_" + label,
-				"label": label,
-				"value": keyValues[label],
-			},
-		})
-	}
+
 	return rows, truncationCount
 }
 
@@ -79,6 +125,7 @@ type Column struct {
 }
 
 type Row struct {
+	ID      string            `json:"id"`
 	Entries map[string]string `json:"entries"`
 }
 
@@ -155,10 +202,13 @@ func (t TableTemplate) Merge(other TableTemplate) TableTemplate {
 		fixedRows = other.FixedRows
 	}
 
+	// TODO: Refactor the merging logic, as mixing
+	// the types now might result in invalid tables.
 	return TableTemplate{
 		ID:        max(t.ID, other.ID),
 		Label:     max(t.Label, other.Label),
 		Prefix:    max(t.Prefix, other.Prefix),
+		Type:      max(t.Type, other.Type),
 		FixedRows: fixedRows,
 	}
 }
@@ -174,6 +224,7 @@ func (t TableTemplates) Tables(node Node) []Table {
 		result = append(result, Table{
 			ID:              template.ID,
 			Label:           template.Label,
+			Type:            template.Type,
 			Rows:            rows,
 			TruncationCount: truncationCount,
 		})

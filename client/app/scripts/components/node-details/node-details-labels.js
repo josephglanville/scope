@@ -48,14 +48,14 @@ export default class NodeDetailsLabels extends React.Component {
       <div className="node-details-labels">
         {controls && Controls(controls)}
         {rows.map(field => (
-          <div className="node-details-labels-field" key={field.entries.id}>
+          <div className="node-details-labels-field" key={field.id}>
             <div
               className="node-details-labels-field-label truncate"
-              title={field.entries.label} key={field.entries.id}>
+              title={field.entries.label} key={field.id}>
               {field.entries.label}
             </div>
             <div className="node-details-labels-field-value truncate" title={field.entries.value}>
-              <MatchedText text={field.entries.value} match={matches.get(field.entries.id)} />
+              <MatchedText text={field.entries.value} match={matches.get(field.id)} />
             </div>
           </div>
         ))}
