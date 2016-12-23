@@ -8,6 +8,7 @@ import { resetDocumentTitle, setDocumentTitle } from '../utils/title-utils';
 
 import MatchedText from './matched-text';
 import NodeDetailsControls from './node-details/node-details-controls';
+import NodeDetailsGenericTable from './node-details/node-details-generic-table';
 import NodeDetailsHealth from './node-details/node-details-health';
 import NodeDetailsInfo from './node-details/node-details-info';
 import NodeDetailsLabels from './node-details/node-details-labels';
@@ -214,9 +215,14 @@ class NodeDetails extends React.Component {
                       <Warning text={getTruncationText(table.truncationCount)} />
                     </span>}
                   </div>
-                  <NodeDetailsLabels
+                  {table.type === 'multicolumn-table' && <NodeDetailsGenericTable
+                    rows={table.rows}
+                    matches={nodeMatches.get('tables')}
+                  />}
+                  {table.type !== 'multicolumn-table' && <NodeDetailsLabels
                     rows={table.rows} controls={table.controls}
-                    matches={nodeMatches.get('tables')} />
+                    matches={nodeMatches.get('tables')}
+                  />}
                 </div>
               );
             }
