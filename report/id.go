@@ -131,6 +131,12 @@ var (
 
 	// ParseECSServiceNodeID parses a replica set node ID
 	ParseECSServiceNodeID = parseSingleComponentID("ecs_service")
+
+	// MakeFlynnJobNodeID produces a flynn job node ID from its composite parts.
+	MakeFlynnJobNodeID = makeSingleComponentID("flynn_job")
+
+	// ParseFlynnJobNodeID parses a flynn job node ID
+	ParseFlynnJobNodeID = parseSingleComponentID("flynn_job")
 )
 
 // makeSingleComponentID makes a single-component node id encoder

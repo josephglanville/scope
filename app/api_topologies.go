@@ -31,6 +31,7 @@ const (
 	weaveID                      = "weave"
 	ecsTasksID                   = "ecs-tasks"
 	ecsServicesID                = "ecs-services"
+	flynnJobsID                  = "flynn-jobs"
 )
 
 var (
@@ -244,6 +245,13 @@ func MakeRegistry() *Registry {
 			renderer: render.HostRenderer,
 			Name:     "Hosts",
 			Rank:     4,
+		},
+		APITopologyDesc{
+			id:          flynnJobsID,
+			renderer:    render.FlynnJobRenderer,
+			Name:        "Jobs",
+			HideIfEmpty: false,
+			Rank:        5,
 		},
 		APITopologyDesc{
 			id:       weaveID,

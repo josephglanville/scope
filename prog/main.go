@@ -103,6 +103,10 @@ type probeFlags struct {
 	dockerInterval time.Duration
 	dockerBridge   string
 
+	flynnEnabled  bool
+	flynnInterval time.Duration
+	flynnHostAddr string
+
 	kubernetesEnabled bool
 	kubernetesConfig  kubernetes.ClientConfig
 
@@ -298,6 +302,11 @@ func main() {
 	flag.StringVar(&flags.probe.kubernetesConfig.Token, kubernetesTokenFlag, "", "Bearer token for authentication to the API server")
 	flag.StringVar(&flags.probe.kubernetesConfig.User, "probe.kubernetes.user", "", "The name of the kubeconfig user to use")
 	flag.StringVar(&flags.probe.kubernetesConfig.Username, "probe.kubernetes.username", "", "Username for basic authentication to the API server")
+
+	// Flynn
+	flag.BoolVar(&flags.probe.flynnEnabled, "probe.flynn", false, "collect Flynn-related attributes for processes")
+	flag.DurationVar(&flags.probe.flynnInterval, "probe.flynn.interval", 10*time.Second, "how often to reconnect to flynn-host on error")
+	flag.StringVar(&flags.probe.flynnHostAddr, "probe.flynn.hostAddr", "", "the flynn-host URL")
 
 	// AWS ECS
 	flag.BoolVar(&flags.probe.ecsEnabled, "probe.ecs", false, "Collect ecs-related attributes for containers on this node")

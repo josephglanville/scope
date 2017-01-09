@@ -24,6 +24,7 @@ const (
 	Overlay        = "overlay"
 	ECSService     = "ecs_service"
 	ECSTask        = "ecs_task"
+	FlynnJob       = "flynn_job"
 
 	// Shapes used for different nodes
 	Circle   = "circle"
@@ -52,6 +53,11 @@ type Report struct {
 	// Metadata includes things like containter id, name, image id etc.
 	// Edges are not present.
 	Container Topology
+
+	// FlynnJob nodes represent all Flynn jobs on hosts running probes.
+	// Metadata includes things like job id, release, app, etc.
+	// Edges are not present
+	FlynnJob Topology
 
 	// Pod nodes represent all Kubernetes pods running on hosts running probes.
 	// Metadata includes things like pod id, name etc. Edges are not
@@ -170,6 +176,10 @@ func MakeReport() Report {
 			WithShape(Heptagon).
 			WithLabel("service", "services"),
 
+		FlynnJob: MakeTopology().
+			WithShape(Hexagon).
+			WithLabel("flynn_job", "flynn_jobs"),
+
 		Sampling: Sampling{},
 		Window:   0,
 		Plugins:  xfer.MakePluginSpecs(),
@@ -192,6 +202,7 @@ func (r Report) Copy() Report {
 		Overlay:        r.Overlay.Copy(),
 		ECSTask:        r.ECSTask.Copy(),
 		ECSService:     r.ECSService.Copy(),
+		FlynnJob:       r.FlynnJob.Copy(),
 		Sampling:       r.Sampling,
 		Window:         r.Window,
 		Plugins:        r.Plugins.Copy(),
@@ -215,6 +226,7 @@ func (r Report) Merge(other Report) Report {
 		Overlay:        r.Overlay.Merge(other.Overlay),
 		ECSTask:        r.ECSTask.Merge(other.ECSTask),
 		ECSService:     r.ECSService.Merge(other.ECSService),
+		FlynnJob:       r.FlynnJob.Merge(other.FlynnJob),
 		Sampling:       r.Sampling.Merge(other.Sampling),
 		Window:         r.Window + other.Window,
 		Plugins:        r.Plugins.Merge(other.Plugins),
@@ -246,6 +258,7 @@ func (r *Report) WalkTopologies(f func(*Topology)) {
 	f(&r.Overlay)
 	f(&r.ECSTask)
 	f(&r.ECSService)
+	f(&r.FlynnJob)
 }
 
 // Topology gets a topology by name
@@ -263,6 +276,7 @@ func (r Report) Topology(name string) (Topology, bool) {
 		Overlay:        r.Overlay,
 		ECSTask:        r.ECSTask,
 		ECSService:     r.ECSService,
+		FlynnJob:       r.FlynnJob,
 	}[name]
 	return t, ok
 }

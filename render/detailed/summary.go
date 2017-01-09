@@ -7,6 +7,7 @@ import (
 	"github.com/weaveworks/scope/probe/awsecs"
 	"github.com/weaveworks/scope/probe/docker"
 	"github.com/weaveworks/scope/probe/endpoint"
+	"github.com/weaveworks/scope/probe/flynn"
 	"github.com/weaveworks/scope/probe/host"
 	"github.com/weaveworks/scope/probe/kubernetes"
 	"github.com/weaveworks/scope/probe/overlay"
@@ -71,6 +72,7 @@ var renderers = map[string]func(NodeSummary, report.Node) (NodeSummary, bool){
 	report.ReplicaSet:     podGroupNodeSummary,
 	report.ECSTask:        ecsTaskNodeSummary,
 	report.ECSService:     ecsServiceNodeSummary,
+	report.FlynnJob:       flynnJobSummary,
 	report.Host:           hostNodeSummary,
 	report.Overlay:        weaveNodeSummary,
 }
@@ -251,6 +253,12 @@ func ecsTaskNodeSummary(base NodeSummary, n report.Node) (NodeSummary, bool) {
 func ecsServiceNodeSummary(base NodeSummary, n report.Node) (NodeSummary, bool) {
 	base.Label, _ = report.ParseECSServiceNodeID(n.ID)
 	base.Stack = true
+	return base, true
+}
+
+func flynnJobSummary(base NodeSummary, n report.Node) (NodeSummary, bool) {
+	base.Label, _ = n.Latest.Lookup(flynn.JobID)
+	base.LabelMinor = report.ExtractHostID(n)
 	return base, true
 }
 

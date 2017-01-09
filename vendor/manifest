@@ -818,6 +818,339 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/flynn/flynn/controller/types",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "controller/types",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/discoverd/client",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "discoverd/client",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/discoverd/types",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "discoverd/types",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/host/resource",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "host/resource",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/host/types",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "4499842a15be2d0d901d21a324f043187e55089f",
+			"branch": "host-container-pids",
+			"path": "/host/types",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/host/volume",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "host/volume",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/pkg/attempt",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "pkg/attempt",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/pkg/certgen",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "pkg/certgen",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/pkg/cluster",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "/pkg/cluster",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/pkg/cors",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "pkg/cors",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/pkg/ctxhelper",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "pkg/ctxhelper",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/pkg/dialer",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "pkg/dialer",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/pkg/httpclient",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "pkg/httpclient",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/pkg/httphelper",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "pkg/httphelper",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/pkg/random",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "pkg/random",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/pkg/sse",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "pkg/sse",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/pkg/stream",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "pkg/stream",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/pkg/tlscert",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "pkg/tlscert",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/pkg/typeconv",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "pkg/typeconv",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/router/types",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "router/types",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/Sirupsen/logrus",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/Sirupsen/logrus",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/boltdb/bolt",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/boltdb/bolt",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/docker/go-units",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/docker/go-units",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/jackc/pgx",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/jackc/pgx",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/jtacoma/uritemplates",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/jtacoma/uritemplates",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/julienschmidt/httprouter",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/julienschmidt/httprouter",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/mattn/go-colorable",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/mattn/go-colorable",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/mattn/go-isatty",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/mattn/go-isatty",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/mistifyio/go-zfs",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/mistifyio/go-zfs",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/opencontainers/runc/libcontainer/configs",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/opencontainers/runc/libcontainer/configs",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/opencontainers/runc/libcontainer/selinux",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/opencontainers/runc/libcontainer/selinux",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/opencontainers/runc/libcontainer/system",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/opencontainers/runc/libcontainer/system",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/rancher/sparse-tools/sparse",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/rancher/sparse-tools/sparse",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/github.com/tent/canonical-json-go",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/github.com/tent/canonical-json-go",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/golang.org/x/net/context",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/golang.org/x/net/context",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/golang.org/x/sys/unix",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/golang.org/x/sys/unix",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/flynn/flynn/vendor/gopkg.in/inconshreveable/log15.v2",
+			"repository": "https://github.com/flynn/flynn",
+			"vcs": "git",
+			"revision": "aacfe54d70447b2972b6204ddcead090affe2466",
+			"branch": "master",
+			"path": "vendor/gopkg.in/inconshreveable/log15.v2",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/fsouza/go-dockerclient",
 			"repository": "https://github.com/fsouza/go-dockerclient",
 			"vcs": "git",

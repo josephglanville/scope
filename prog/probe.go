@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
 	"net"
 	"net/http"
@@ -28,6 +29,7 @@ import (
 	"github.com/weaveworks/scope/probe/docker"
 	"github.com/weaveworks/scope/probe/endpoint"
 	"github.com/weaveworks/scope/probe/endpoint/procspy"
+	"github.com/weaveworks/scope/probe/flynn"
 	"github.com/weaveworks/scope/probe/host"
 	"github.com/weaveworks/scope/probe/kubernetes"
 	"github.com/weaveworks/scope/probe/overlay"
@@ -204,6 +206,19 @@ func probeMain(flags probeFlags, targets []appclient.Target) {
 			log.Errorf("Kubernetes: failed to start client: %v", err)
 			log.Errorf("Kubernetes: make sure to run Scope inside a POD with a service account or provide valid probe.kubernetes.* flags")
 		}
+	}
+
+	if flags.flynnEnabled {
+		if flags.flynnHostAddr == "" {
+			flags.flynnHostAddr = fmt.Sprintf("http://%s:%d", os.Getenv("EXTERNAL_IP"), 1113)
+		}
+		flynnHost := flynn.NewFlynnHost(flags.flynnInterval, flags.flynnHostAddr)
+		defer flynnHost.Stop()
+		if flags.procEnabled {
+			p.AddTagger(flynn.NewTagger(flynnHost, processCache))
+		}
+		reporter := flynn.NewReporter(flynnHost, hostID, probeID, p)
+		p.AddReporter(reporter)
 	}
 
 	if flags.ecsEnabled {

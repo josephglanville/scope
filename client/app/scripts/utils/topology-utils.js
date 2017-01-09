@@ -13,6 +13,7 @@ const TOPOLOGY_DISPLAY_PRIORITY = [
   'replica-sets',
   'pods',
   'containers',
+  'flynn-jobs',
 ];
 
 
